@@ -97,10 +97,15 @@ picoquic_proj = cmake.subproject(
 
 # Dependencies used by both executables
 slipstream_cli_deps = [
-  dependency('threads'), # for picoquic
+  dependency('threads'),
   picoquic_proj.dependency('picoquic-core'),
 ]
-# Link optional picoquic logging
+
+# Add picotls openssl backend
+ptls_openssl_dep = picoquic_proj.dependency('picotls-openssl')
+slipstream_cli_deps += ptls_openssl_dep
+
+# Optional picoquic logging
 if loglib_enabled
   slipstream_cli_deps += picoquic_proj.dependency('picoquic-log')
 endif
